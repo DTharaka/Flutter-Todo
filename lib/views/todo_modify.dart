@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:todo_app/services/todo_service.dart';
 
-class TodoModify extends StatelessWidget {
+class TodoModify extends StatefulWidget {
 
   final String todoID;
   TodoModify({this.todoID});
-  bool get isEditing => todoID != null;
+
+  @override
+  _TodoModifyState createState() => _TodoModifyState();
+}
+
+class _TodoModifyState extends State<TodoModify> {
+  bool get isEditing => widget.todoID != null;
+
+  TodoServices get todosService => GetIt.I<TodoServices>();
+
+  @override
+  void initState() {
+    todosService.getTodo(widget.todoID)
+    .then((data) {
+
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
