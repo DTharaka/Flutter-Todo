@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:todo_app/models/todo.dart';
 import 'package:todo_app/services/todo_service.dart';
 
 class TodoModify extends StatefulWidget {
@@ -16,11 +17,17 @@ class _TodoModifyState extends State<TodoModify> {
 
   TodoServices get todosService => GetIt.I<TodoServices>();
 
+  String errorMassage;
+  Todo todo;
+
   @override
   void initState() {
     todosService.getTodo(widget.todoID)
-    .then((data) {
-
+    .then((response) {
+      if (response.error) {
+        errorMassage = response.errorMessage ?? 'An error ocurred';
+      }
+      todo = response.data;
     });
     super.initState();
   }
